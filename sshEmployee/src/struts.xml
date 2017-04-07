@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="ssh" extends="struts-default" namespace="/">
+	<interceptors>
+	<!-- 定义一个拦截器 -->
+	<interceptor name="myinceptor" class="com.iris.interceptor.LoginIntercepter"/>
+	<!-- 定义一个拦截器栈 -->
+	<interceptor-stack name="mystack">
+		<interceptor-ref name="defaultStack"/>
+		<interceptor-ref name="myinceptor"/>
+	</interceptor-stack>	
+	</interceptors>
+	 <!-- 配置全局拦截器 --> 
+    <default-interceptor-ref name="mystack"/>
+    <!-- 定义全局Result --> 
+    <global-results>  
+        <!-- 当返回login视图名时，重定向转入/index.jsp页面 -->  
+        <result name="login" type="redirect">/index.jsp</result>  
+    </global-results>
+    
+	<action name="employee_*" class="employeeAction" method="{1}">
+	<result name="Admin_success" type="redirect">/frame.jsp</result>
+	<result name="Employee_success" type="redirect">/Employeeframe.jsp</result>
+	<result name="filure">/index.jsp</result>
+	<result name="findAll">/jsp/employee/list.jsp</result>
+	<result name="saveUI">/jsp/employee/add.jsp</result>
+	<result name="saveSuccess" type="redirectAction">employee_findAll.action</result>
+	<result name="editSuccess" >/jsp/employee/edit.jsp</result>
+	<result name="updateSuccess"  type="redirectAction">employee_findAll.action</result>
+	<result name="deleteSuccess"  type="redirectAction">employee_findAll.action</result>
+	</action>
+	
+	
+	<action name="department_*" class="departmentAction" method="{1}">
+	<result name="findAll">/jsp/department/list.jsp</result>
+	<result name="saveUI">/jsp/department/add.jsp</result>
+	<result name="saveSuccess" type="redirectAction">department_findAll.action</result>
+	<result name="editSuccess" >/jsp/department/edit.jsp</result>
+	<result name="updateSuccess"  type="redirectAction">department_findAll.action</result>
+	<result name="deleteSuccess"  type="redirectAction">department_findAll.action</result>
+	</action>
+</package>
+</struts>    
